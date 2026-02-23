@@ -1,0 +1,9 @@
+operator:
+  image:
+    repository: orima2002/custom-operator
+    tag: "24bcd17"
+  replicaCount: 1
+  pullPolicy: IfNotPresent
+
+rbac:
+  create: true

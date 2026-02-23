@@ -18,6 +18,9 @@ spec:
         - name: operator
           image: "{{ .Values.operator.image.repository }}:{{ .Values.operator.image.tag }}"
           imagePullPolicy: {{ .Values.operator.image.pullPolicy }}
+          ports:
+            - name: metrics
+              containerPort: 8080
           resources:
             requests:
               cpu: "100m"

@@ -1,0 +1,39 @@
+{{- if .Values.alerting.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: "{{ .Release.Name }}-preview-alerts"
+  namespace: {{ .Release.Namespace }}
+  labels:
+    release: prometheus
+spec:
+  groups:
+    - name: preview-environments
+      rules:
+        - alert: PreviewOperatorDown
+          expr: absent(preview_environments_active)
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Preview operator is down"
+            description: "The preview environment operator has stopped reporting metrics for more than 2 minutes."
+
+        - alert: PreviewEnvironmentHighFailureRate
+          expr: increase(preview_environments_failed_total[5m]) > 3
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High preview environment failure rate"
+            description: "More than 3 preview environment failures in the last 5 minutes at step {{ $labels.step }}."
+
+        - alert: PreviewEnvironmentSlowCreation
+          expr: histogram_quantile(0.95, sum(rate(preview_environment_creation_duration_seconds_bucket[5m])) by (le)) > 30
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Preview environment creation is slow"
+            description: "p95 creation duration has exceeded 30 seconds for the last 5 minutes."
+{{- end }}

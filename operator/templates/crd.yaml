@@ -37,6 +37,10 @@ spec:
                 image_tag:
                   type: string
                   description: "The Docker image tag to deploy"
+                ttl_seconds:
+                  type: integer
+                  minimum: 60
+                  description: "Auto-delete environment after this many seconds (optional)"
               required: ["pr_number", "branch_name", "image", "image_tag"]
             status:
               type: object

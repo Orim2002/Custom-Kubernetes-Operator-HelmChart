@@ -2,8 +2,15 @@ operator:
   image:
     repository: orima2002/custom-operator
     tag: "3d7a8b3"
+    pullPolicy: IfNotPresent
   replicaCount: 1
-  pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "200m"
+      memory: "256Mi"
 
 rbac:
   create: true

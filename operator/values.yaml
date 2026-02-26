@@ -1,7 +1,7 @@
 operator:
   image:
     repository: orima2002/custom-operator
-    tag: "5518e68"
+    tag: "43326b5"
     pullPolicy: IfNotPresent
   replicaCount: 1
   resources:

@@ -20,16 +20,16 @@ spec:
             description: "The preview environment operator has stopped reporting metrics for more than 2 minutes."
 
         - alert: PreviewEnvironmentHighFailureRate
-          expr: increase(preview_environments_failed_total[5m]) > 3
+          expr: "increase(preview_environments_failed_total[5m]) > 3"
           for: 1m
           labels:
             severity: warning
           annotations:
             summary: "High preview environment failure rate"
-            description: "More than 3 preview environment failures in the last 5 minutes at step {{ $labels.step }}."
+            description: "More than 3 preview environment failures in the last 5 minutes. Check the step label for details."
 
         - alert: PreviewEnvironmentSlowCreation
-          expr: histogram_quantile(0.95, sum(rate(preview_environment_creation_duration_seconds_bucket[5m])) by (le)) > 30
+          expr: "histogram_quantile(0.95, sum(rate(preview_environment_creation_duration_seconds_bucket[5m])) by (le)) > 30"
           for: 5m
           labels:
             severity: warning

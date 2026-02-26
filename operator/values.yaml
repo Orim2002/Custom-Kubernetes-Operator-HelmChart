@@ -1,7 +1,7 @@
 operator:
   image:
     repository: orima2002/custom-operator
-    tag: "882b976"
+    tag: "3d7a8b3"
   replicaCount: 1
   pullPolicy: IfNotPresent
 

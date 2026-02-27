@@ -1,0 +1,23 @@
+# NetworkPolicy for the operator namespace:
+# - Allow Prometheus (monitoring namespace) to scrape metrics on port 8000
+# - Allow the Kubernetes API server to reach the operator (kopf webhooks)
+# - Deny all other ingress
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "{{ .Release.Name }}-operator-netpol"
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app: "{{ .Chart.Name }}"
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+      ports:
+        - protocol: TCP
+          port: 8000

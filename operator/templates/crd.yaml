@@ -27,20 +27,31 @@ spec:
               properties:
                 pr_number:
                   type: integer
+                  minimum: 1
+                  maximum: 999999
                   description: "The GitHub Pull Request number"
                 branch_name:
                   type: string
+                  minLength: 1
+                  maxLength: 255
                   description: "The name of the Git branch"
                 image:
                   type: string
-                  description: "The Docker image to deploy"
+                  minLength: 1
+                  maxLength: 256
+                  pattern: '^[a-zA-Z0-9._/\-]+$'
+                  description: "The Docker image to deploy (registry/repo format)"
                 image_tag:
                   type: string
+                  minLength: 1
+                  maxLength: 128
+                  pattern: '^[a-zA-Z0-9._\-]+$'
                   description: "The Docker image tag to deploy"
                 ttl_seconds:
                   type: integer
                   minimum: 60
-                  description: "Auto-delete environment after this many seconds (optional)"
+                  maximum: 86400
+                  description: "Auto-delete environment after this many seconds (optional, max 24h)"
               required: ["pr_number", "branch_name", "image", "image_tag"]
             status:
               type: object

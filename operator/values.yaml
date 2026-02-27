@@ -15,5 +15,11 @@ operator:
 rbac:
   create: true
 
+workloadIdentity:
+  # Set enabled: true and provide the clientId from `terraform output operator_client_id`
+  # to allow the operator pod to authenticate to Azure services without any secret.
+  enabled: false
+  clientId: ""
+
 alerting:
   enabled: true

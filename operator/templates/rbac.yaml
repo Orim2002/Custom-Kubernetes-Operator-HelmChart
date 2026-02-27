@@ -4,6 +4,10 @@ kind: ServiceAccount
 metadata:
   name: "{{ .Release.Name }}-operator-sa"
   namespace: {{ .Release.Namespace }}
+  {{- if .Values.workloadIdentity.enabled }}
+  annotations:
+    azure.workload.identity/client-id: "{{ .Values.workloadIdentity.clientId }}"
+  {{- end }}
 
 ---
 

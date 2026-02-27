@@ -12,6 +12,9 @@ spec:
     metadata:
       labels:
         app: "{{ .Chart.Name }}"
+        {{- if .Values.workloadIdentity.enabled }}
+        azure.workload.identity/use: "true"
+        {{- end }}
     spec:
       serviceAccountName: "{{ .Release.Name }}-operator-sa"
       securityContext:
